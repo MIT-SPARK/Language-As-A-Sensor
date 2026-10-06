@@ -1,0 +1,6 @@
+# No 3D geometry: all object boxes are zeroed.
+base: ../train.yaml
+model:
+  zero_bboxes: true
+checkpoint:
+  dir: outputs/checkpoints/ablations/no_geometry

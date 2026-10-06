@@ -1,0 +1,6 @@
+# No spatial backbone: object features skip the spatial-attention encoder.
+base: ../train.yaml
+model:
+  backbone_type: identity
+checkpoint:
+  dir: outputs/checkpoints/ablations/no_spatial_backbone

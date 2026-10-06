@@ -1,0 +1,7 @@
+# No global fusion: pool object features alone and add the text embedding (needs mean pooling).
+base: ../train.yaml
+model:
+  use_global_fusion: false
+  pooling_type: mean
+checkpoint:
+  dir: outputs/checkpoints/ablations/no_global_fusion

@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "langsensor"
+version = "1.0.0"
+description = "Language as a Sensor: calibrated spatial belief estimation in 3D scenes from natural language (CoRL 2026)."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [{ name = "Aryan Naveen", email = "aryannav@mit.edu" }]
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "numpy",
+    "scipy",
+    "pydantic>=2",
+    "omegaconf>=2.3",
+    "open3d>=0.17",
+    "openai>=1.0",
+    "pandas",
+    "matplotlib",
+    "tqdm",
+    "pyyaml",
+]
+
+[project.optional-dependencies]
+# Preprocessing (CLIP label map) and training (W&B logging, tar-sharded cache).
+train = [
+    "clip @ git+https://github.com/openai/CLIP.git",
+    "wandb",
+    "webdataset",
+]
+# Closed-loop VLMaP experiments. Hydra itself is installed separately; see docs/hydra.md.
+closed-loop = [
+    "sentence-transformers",
+    "tifffile",
+    "pillow",
+]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["langsensor*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,6 @@
+# No FiLM conditioning on the region frame.
+base: ../train.yaml
+model:
+  use_film: false
+checkpoint:
+  dir: outputs/checkpoints/ablations/no_film

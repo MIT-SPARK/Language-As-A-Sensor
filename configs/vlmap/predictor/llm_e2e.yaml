@@ -1,0 +1,7 @@
+# LLM-E2E: the LLM returns the whole mixture in one call (no proposer).
+# The paper's sweep used gpt-4o-mini.
+type: llm_e2e
+provider: openai
+model: gpt-4o-mini
+fallback_sigma: 0.5
+max_components: 5

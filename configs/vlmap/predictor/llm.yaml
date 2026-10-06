@@ -1,0 +1,6 @@
+# Scaffolded-LLM: LLM proposer + one LLM-predicted Gaussian per grounding.
+# The paper's sweep used gpt-4o-mini here (and gpt-5.2 for the proposer).
+type: llm
+provider: openai
+model: gpt-4o-mini
+fallback_sigma: 0.5

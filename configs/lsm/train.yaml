@@ -1,0 +1,63 @@
+# LSM training. These are the settings the released checkpoint was trained with
+# (they are also stored inside the checkpoint under "cfg").
+
+# Output of scripts/preprocess.py: <cache_dir>/{train,val_seen,val_unseen}/
+cache_dir: outputs/tensor_cache
+
+model:                        # fields of langsensor.lsm.config.LSMConfig
+  hidden_dim: 256
+  clip_dim: 512
+  text_model: bert-base-uncased
+  text_model_revision: 86b5e0934494bd15c9632b12f734a8a67f723594   # Hugging Face commit of the frozen encoder
+  freeze_text: true
+  spatial_relation_dim: 12
+  spatial_mlp_hidden: 64
+  condition_spatial_on_text: true
+  use_anchor_centric_coords: true
+  backbone_type: scene_spatial
+  num_spatial_layers: 3
+  num_fusion_layers: 3
+  num_heads: 8
+  ffn_dim: 1024
+  use_global_fusion: true
+  zero_bboxes: false
+  pooling_type: query_token
+  head_min_sigma: 0.05
+  use_film: true
+  film_hidden_dim: 64
+  dropout: 0.3
+  max_objects: 150
+  max_text_len: 64
+
+training:
+  epochs: 50
+  batch_size: 256
+  lr: 1.0e-4
+  bert_lr_scale: 0.0          # BERT frozen
+  weight_decay: 1.0e-2
+  warmup_steps: 500           # then cosine decay
+  grad_clip: 1.0
+  precision: bf16             # bf16 | fp16 | fp32
+  num_workers: 4
+  seed: 42
+  compile: true               # torch.compile on CUDA
+  max_train_steps_per_epoch: 0  # >0 caps an epoch, for quick checks
+
+loss:                         # center_nll: Gaussian NLL + L1 + Mahalanobis + log-det
+  lambda_l1: 1.0
+  lambda_mahal: 0.1
+  lambda_vol: 0.0
+
+augmentation:                 # train split only
+  mask_prob: 0.3              # hide non-anchor objects
+  jitter_std: 0.05            # noise on object centres (region units)
+
+checkpoint:
+  dir: outputs/checkpoints/lsm
+  save_every: 5
+
+wandb:
+  enabled: false
+  project: langsensor-lsm
+  name: null
+  tags: []

@@ -1,0 +1,36 @@
+# Closed-loop VLMaP evaluation (Figure 4, Table 2). Values are those of the
+# 2026-05-14 sweep reported in the paper. Select a language predictor with
+# predictor=<name> (a file in predictor/): none | lsm | llm | llm_e2e.
+predictor: lsm
+name: null             # output subdirectory; defaults to the predictor name
+
+data_root: null        # null -> $CLOSED_LOOP_ROOT (default data/closed_loop)
+cache_dir: null        # null -> $LANGSENSOR_ARTIFACTS/cache/closed_loop
+out_dir: outputs/closed_loop
+max_steps: null        # cap frames per trajectory, for quick checks
+
+scenes: [17DRP5sb8fy, 2t7WUuJeko7, GdvgFV5R1Z5, gZ6f7yhEvPG, HxpKQynjfin, JF19kD82Mey, jh4fc5c5qoQ,
+         pLe4wQe7qrG, Pm6F8kyY3z2, RPmz2sHmrrY, x8F5xyUWy9e, XcA2TqTSSAj, YmJkqBEsHnH]
+
+proposer:              # grounding proposer shared by the lsm and llm predictors
+  provider: openai
+  model: gpt-5.2
+
+sensor:                # semantic vision sensor on Hydra's TSDF
+  voxel_size: 0.1
+  voxels_per_side: 16
+  top_k: 15            # labels kept per voxel
+  min_tsdf_weight: 1.0
+  tsdf_sigma: 0.15     # occupancy log σ(-d / tsdf_sigma)
+  score_ema_alpha: 0.25
+  unobserved_mode: uniform   # unobserved voxels score 1 / N_voxels
+  unobserved_score: 0.01     # used only when unobserved_mode: fixed
+
+fusion:
+  resolution: 0.1      # fusion grid spacing (m)
+  z_pad: 0.5           # grid z-range = point cloud z-range ∪ targets, ± z_pad
+  language_weight: 1.0
+
+metrics:
+  surface_radius: 0.15      # a voxel within this of the target surface counts as on-target
+  success_threshold: 0.15   # terminal surface mass for a success

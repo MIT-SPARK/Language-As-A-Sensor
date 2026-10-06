@@ -1,0 +1,6 @@
+# No anchor-centric offset embedding.
+base: ../train.yaml
+model:
+  use_anchor_centric_coords: false
+checkpoint:
+  dir: outputs/checkpoints/ablations/no_anchor_centric

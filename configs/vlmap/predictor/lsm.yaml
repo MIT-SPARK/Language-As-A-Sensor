@@ -1,0 +1,5 @@
+# LSM (ours): LLM proposer + the Language Sensor Model.
+type: lsm
+checkpoint: null         # null -> artifacts/checkpoints/lsm.pt
+clip_label_map: null     # null -> artifacts/checkpoints/clip_label_map.pt
+device: cuda

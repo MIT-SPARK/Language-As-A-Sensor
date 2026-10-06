@@ -1,0 +1,25 @@
+# Downloaded artifacts and datasets (see docs/artifacts.md, docs/data.md)
+artifacts/
+data/
+
+# Everything the code writes
+outputs/
+wandb/
+*.pt
+*.pth
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Editors
+.vscode/
+.idea/
+.cursor/
+.claude/
